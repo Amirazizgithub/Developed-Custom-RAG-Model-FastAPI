@@ -24,12 +24,16 @@ This system bridges structured document knowledge with cutting-edge AI capabilit
 1. Clone the repository:
     ```sh
     git clone https://github.com/yourusername/Developed-Custom-RAG-Model-FastAPI.git
+    ```
+    ```sh
     cd Developed-Custom-RAG-Model-FastAPI
     ```
 
 2. Create and activate a virtual environment:
     ```sh
     python -m venv venv
+    ```
+    ```sh
     source venv/bin/activate  # On Windows use `venv\Scripts\activate`
     ```
 
@@ -83,7 +87,7 @@ This system bridges structured document knowledge with cutting-edge AI capabilit
     - Description: Get a response to a user query using the specified AI model.
     - Example:
         ```sh
-        curl -X POST "http://127.0.0.1:8000/rag_model/query_response" -H "Content-Type: application/json" -d '{"ai_model": "openai", "user_query": "What is the capital of France?", "temperature": 0.7, "model_type": "knowledge_graph"}'
+        curl -X POST "http://127.0.0.1:8000/rag_model/query_response" -H "Content-Type: application/json" -d '{"ai_model": "openai", "user_query": "What is the capital of France?", "temperature": 0.7, "model_type": "AI"}'
         ```
 
 ## License
