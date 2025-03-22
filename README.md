@@ -33,7 +33,6 @@ This system bridges structured document knowledge with cutting-edge AI capabilit
     ```sh
     python -m venv venv
     ```
-    Activate the virtual environment:
     ```sh
     source venv/bin/activate
     ```
