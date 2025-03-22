@@ -69,11 +69,16 @@ class Website_Scraper:
     def extract_text_from_website(self):
         try:
             all_urls = self.get_all_urls()
-            if len(all_urls) <100:
+            if len(all_urls) < 100:
                 direct_urls = self.separate_direct_urls(all_urls)
             else:
-                return JSONResponse(content={"message": "This website having more than 100 URLs to scrape"}, status_code=200)
-            
+                return JSONResponse(
+                    content={
+                        "message": "This website having more than 100 URLs to scrape"
+                    },
+                    status_code=200,
+                )
+
             accumulated_text = ""
             for url in direct_urls:
                 accumulated_text += self.scrape_and_accumulate(accumulated_text, url)

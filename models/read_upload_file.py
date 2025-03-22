@@ -3,9 +3,13 @@ from datetime import datetime
 from fastapi.responses import JSONResponse
 from langchain_text_splitters import CharacterTextSplitter
 from langchain_community.document_loaders import TextLoader, PyPDFLoader, Docx2txtLoader
-from langchain_community.embeddings.sentence_transformer import SentenceTransformerEmbeddings
+from langchain_community.embeddings.sentence_transformer import (
+    SentenceTransformerEmbeddings,
+)
 import warnings
+
 warnings.filterwarnings("ignore")
+
 
 class TextProcessor:
     def __init__(self, file_path: str):
@@ -43,15 +47,22 @@ class TextProcessor:
                 text = text_splitter.split_documents(documents)
                 self.text_chunks += text
                 return self.text_chunks
-        
+
             ## File format not supported
             else:
                 return JSONResponse(
-                    content={"message": "File format not supported. Please upload pdf, docx or txt file."}, status_code=400
+                    content={
+                        "message": "File format not supported. Please upload pdf, docx or txt file."
+                    },
+                    status_code=400,
                 )
         except Exception as e:
             return JSONResponse(
-                content={"message": "Retry it! File not read and extract text from it.", "error": str(e)}, status_code=400
+                content={
+                    "message": "Retry it! File not read and extract text from it.",
+                    "error": str(e),
+                },
+                status_code=400,
             )
 
     # Generate embeddings for text chunks and store in MongoDB
@@ -62,21 +73,26 @@ class TextProcessor:
             document = {
                 "text": chunk.page_content,
                 "embedding": embedding,
-                "timestamp": datetime.today().strftime('%Y-%m-%d %H:%M:%S'),
-                "status": 1
+                "timestamp": datetime.today().strftime("%Y-%m-%d %H:%M:%S"),
+                "status": 1,
             }
             self.docs_collection.insert_one(document)
         return None
-    
+
     # Read the file and store the embeddings in MongoDB
     def read_file_and_store_embeddings(self):
         try:
             self.extract_text()
             self.store_embeddings_in_mongodb()
             return JSONResponse(
-                content={"message": "File read and embeddings stored successfully."}, status_code=200
+                content={"message": "File read and embeddings stored successfully."},
+                status_code=200,
             )
         except Exception as e:
             return JSONResponse(
-                content={"message": "Retry it! File not read and store embeddings in MongoDB.", "error": str(e)}, status_code=400
+                content={
+                    "message": "Retry it! File not read and store embeddings in MongoDB.",
+                    "error": str(e),
+                },
+                status_code=400,
             )

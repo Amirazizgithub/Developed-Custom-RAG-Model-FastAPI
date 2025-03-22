@@ -10,6 +10,7 @@ from models.llama_model import Llama_Model
 ## Global Route
 router = APIRouter()
 
+
 # Endpoint to upload files
 @router.post("/read_upload_file")
 async def read_file_and_extract_text(request: Request):
@@ -21,7 +22,8 @@ async def read_file_and_extract_text(request: Request):
         return JSONResponse(
             content={"message": "API Error", "Error": str(e)}, status_code=200
         )
-    
+
+
 # Endpoint to web scrapping
 @router.post("/web_scraping")
 async def web_scrapping(request: Request):
@@ -34,7 +36,8 @@ async def web_scrapping(request: Request):
         return JSONResponse(
             content={"message": "API Error", "Error": str(e)}, status_code=200
         )
-    
+
+
 # Endpoint to response of user query
 @router.post("/query_response")
 async def response_of_user_query(request: Request):
@@ -51,9 +54,10 @@ async def response_of_user_query(request: Request):
             Llama_Model_obj = Llama_Model(data=data)
             return Llama_Model_obj.response_to_user_from_llama_model()
         else:
-            return JSONResponse(content={"message": "Invalid model type"}, status_code=400)
+            return JSONResponse(
+                content={"message": "Invalid model type"}, status_code=400
+            )
     except Exception as e:
         return JSONResponse(
             content={"message": "API Error", "Error": str(e)}, status_code=200
         )
-    

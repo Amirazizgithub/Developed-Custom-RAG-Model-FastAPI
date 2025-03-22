@@ -138,7 +138,13 @@ class Llama_Model:
 
     def get_user_recent_history(self):
         try:
-            data = self.history_collection.find({},{"_id":0,"user_query":1,"response":1,"top_documents":1}).sort("_id", -1).limit(1)
+            data = (
+                self.history_collection.find(
+                    {}, {"_id": 0, "user_query": 1, "response": 1, "top_documents": 1}
+                )
+                .sort("_id", -1)
+                .limit(1)
+            )
             recent_history = list(data)
             return recent_history
         except Exception:
@@ -158,12 +164,12 @@ class Llama_Model:
     # Store the session history in MongoDB
     def session_history(self, response, top_documents) -> None:
         responseData = {
-            'user_query' : self.user_query,
-            'response' : response,
-            'top_documents':top_documents,
-            'date' : self.time[0],
-            'time' : self.time[1],
-            'del' : 0
+            "user_query": self.user_query,
+            "response": response,
+            "top_documents": top_documents,
+            "date": self.time[0],
+            "time": self.time[1],
+            "del": 0,
         }
         self.history_collection.insert_one(responseData)
         return None
@@ -171,16 +177,23 @@ class Llama_Model:
     def response_to_user_from_knowledge_graph(self):
         try:
             user_query_embedding = self.generate_query_embedding()
-            top_documents = self.find_similar_documents(user_query_embedding, threshold=0.6, top_k=10)
+            top_documents = self.find_similar_documents(
+                user_query_embedding, threshold=0.6, top_k=10
+            )
 
             # If the user query is found in the context
             if top_documents:
                 response = self.generate_response_from_llama_01(top_documents)
                 response = response.replace("\n", "")
                 if response:
-                    self.session_history(response,top_documents)
-                    return JSONResponse(content={"message":response}, status_code=200)
-                return JSONResponse(content={"message":"Please, Give the feedback for the better response."}, status_code=200)
+                    self.session_history(response, top_documents)
+                    return JSONResponse(content={"message": response}, status_code=200)
+                return JSONResponse(
+                    content={
+                        "message": "Please, Give the feedback for the better response."
+                    },
+                    status_code=200,
+                )
 
             # If the user query is not found in the context
             elif not top_documents:
@@ -188,21 +201,47 @@ class Llama_Model:
                 if recent_history:
                     previous_response = recent_history[0]["response"]
                     previuos_top_documents = recent_history[0]["top_documents"]
-                    response = self.generate_response_from_llama_01(previuos_top_documents)
+                    response = self.generate_response_from_llama_01(
+                        previuos_top_documents
+                    )
                     response = response.replace("\n", "")
-                    previous_response_embedding, response_embedding = self.generate_response_embedding(previous_response, response)
-                    cos_sim = cosine_similarity(previous_response_embedding, response_embedding)[0]
+                    previous_response_embedding, response_embedding = (
+                        self.generate_response_embedding(previous_response, response)
+                    )
+                    cos_sim = cosine_similarity(
+                        previous_response_embedding, response_embedding
+                    )[0]
                     if cos_sim > 0.6:
-                        self.session_history(response,previuos_top_documents)
-                        return JSONResponse(content={"message":response}, status_code=200)
+                        self.session_history(response, previuos_top_documents)
+                        return JSONResponse(
+                            content={"message": response}, status_code=200
+                        )
                     elif cos_sim < 0.6:
-                        return JSONResponse(content={"message":"No relevant documents found in the PDF collection."}, status_code=200)
+                        return JSONResponse(
+                            content={
+                                "message": "No relevant documents found in the PDF collection."
+                            },
+                            status_code=200,
+                        )
                 else:
-                    return JSONResponse(content={"message":"No relevant documents found in the PDF collection."}, status_code=200)
+                    return JSONResponse(
+                        content={
+                            "message": "No relevant documents found in the PDF collection."
+                        },
+                        status_code=200,
+                    )
 
-            return JSONResponse(content={"message":"No relevant documents found in the PDF collection."}, status_code=200)
+            return JSONResponse(
+                content={
+                    "message": "No relevant documents found in the PDF collection."
+                },
+                status_code=200,
+            )
         except Exception as e:
-            return JSONResponse(content={"message":"Failed to generate a response.","error":str(e)}, status_code=500)
+            return JSONResponse(
+                content={"message": "Failed to generate a response.", "error": str(e)},
+                status_code=500,
+            )
 
     def response_to_user_from_knowledge_graph_and_Llama(self):
         try:

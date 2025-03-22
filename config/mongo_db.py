@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 class MongoDB:
     def __init__(self):
         # Connection details for data visualization
@@ -14,5 +15,5 @@ class MongoDB:
     def get_client(self):
         return self.client
 
-mongo_db = MongoDB()
 
+mongo_db = MongoDB()
