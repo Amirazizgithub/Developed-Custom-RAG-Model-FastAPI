@@ -8,3 +8,8 @@ scikit-learn
 langchain
 langchain_community
 langchain_text_splitters
+python-dotenv
+black
+huggingface-hub
+google.generativeai
+beautifulsoup4
