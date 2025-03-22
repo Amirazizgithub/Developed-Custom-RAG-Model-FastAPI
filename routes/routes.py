@@ -61,3 +61,4 @@ async def response_of_user_query(request: Request):
         return JSONResponse(
             content={"message": "API Error", "Error": str(e)}, status_code=200
         )
+ 

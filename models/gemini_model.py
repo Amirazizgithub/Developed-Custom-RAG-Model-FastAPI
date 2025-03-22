@@ -85,7 +85,7 @@ class Gemini_Model:
     def generate_response_from_gemini_01(self, top_documents) -> str:
         context = " ".join([doc for doc in top_documents])
         specific_prompt = (
-            f"You are a helpful assistant which generates a response to the user query from the given context. Provide the response in the html format like <!DOCTYPE html> <html> <body> <h> <h> <p></p> </body> </html>. \n"
+            f"You are a helpful assistant which generates a response to the user query from the given context.\n"
             f"If the user query's meaningful response is not found in the context, then generate a good and meaningful response on your own.\n"
             f"The response should be in a tone like neutral, style like informative.\n"
             f"Ensure the response starts with a strong and relevant opening sentence but not include in response like Opening Sentence.\n"
@@ -108,7 +108,7 @@ class Gemini_Model:
 
     def generate_response_from_gemini_02(self) -> str:
         specific_prompt = (
-            f"You are a helpful assistant which generates a response to the user query. Provide the response in the html format like <!DOCTYPE html> <html> <body> <h> <h> <p></p> </body> </html>.\n"
+            f"You are a helpful assistant which generates a response to the user query.\n"
             f"The response should be in a tone like neutral, style like informative.\n"
             f"Ensure the response starts with a strong and relevant opening sentence but not include in response like Opening Sentence.\n"
             f"User Query: {self.user_query}\n"
