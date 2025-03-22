@@ -33,8 +33,9 @@ This system bridges structured document knowledge with cutting-edge AI capabilit
     ```sh
     python -m venv venv
     ```
+    Activate the virtual environment:
     ```sh
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+    source venv/bin/activate
     ```
 
 3. Install the required dependencies:
