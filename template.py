@@ -24,6 +24,7 @@ list_of_files = [
     ".gitignore",
     ".env",
     "setup.py",
+    "app.py",
 ]
 
 # Create the directories of the folder and write the files if they do not exist

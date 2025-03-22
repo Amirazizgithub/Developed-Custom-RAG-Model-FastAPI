@@ -172,3 +172,9 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+
+# testing files
+test.py
+static/CSS/test_styles.css
+templates/test_index.html

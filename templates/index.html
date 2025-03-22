@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom RAG Model</title>
+    <link rel="stylesheet" href="/static/CSS/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Query Input Form</h1>
+        <form action="/submit_query" method="post">
+            <label for="ai_model">Select AI Model:</label>
+            <select id="ai_model" name="ai_model">
+                <option value="openai">OpenAI</option>
+                <option value="gemini">Gemini</option>
+                <option value="llama">Llama</option>
+            </select>
+
+            <label for="model_type">Select Model Type:</label>
+            <select id="model_type" name="model_type">
+                <option value="knowledge_graph">Knowledge Graph</option>
+                <option value="knowledge_graph_and_AI">Knowledge Graph and AI</option>
+                <option value="AI">AI</option>
+            </select>
+
+            <label for="temperature">Temperature:</label>
+            <input type="number" id="temperature" name="temperature" step="0.1" min="0" max="1" required>
+
+            <label for="user_query">User Query:</label>
+            <textarea id="user_query" name="user_query" rows="4" required></textarea>
+
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
