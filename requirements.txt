@@ -1,0 +1,10 @@
+# Path: requirements.txt
+pymongo
+fastapi
+datetime
+numpy
+openai
+scikit-learn
+langchain
+langchain_community
+langchain_text_splitters
